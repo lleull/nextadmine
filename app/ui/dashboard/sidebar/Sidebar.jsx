@@ -1,6 +1,7 @@
 import Menulink from "./menulink/Menulink";
 import styles from "./sidebar.module.css";
 import proimg from "./../../../../public/noavatar.png"
+import Image from "next/image";
 import {
   MdDashboard,
   MdSupervisedUserCircle,
@@ -79,7 +80,7 @@ const Sidebar = () => {
   return (
     <div className={styles.container}>
         <div className={styles.user}>
-            <img className={styles.userImage} src="./../../../../public/noavater.png" alt="asd" width="50px" height="50px" />
+            <Image className={styles.userImage} src="/noavatar.png" alt="asd" width={50} height={50} />
             <div className={styles.userDetail}>
                 <span className={styles.username}>Jhon Doe</span>
                 <span className={styles.userTitle}>Administrator</span>
