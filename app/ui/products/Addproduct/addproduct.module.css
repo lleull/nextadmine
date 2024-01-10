@@ -12,7 +12,7 @@
 }
 .form input,
 .form textarea,
-.from select {
+.form select {
  padding: 30px;
  background: transparent;
  color:  var(--textSoft);
@@ -34,4 +34,5 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    
 }

@@ -13,12 +13,11 @@ const Dashboard = () => {
           <Card />
         </div>
         <Transaction />
-        <Chart/>
-        </div>
-        <div className={styles.side}>
-          <Rightbar />
-        </div>
-      
+        <Chart />
+      </div>
+      <div className={styles.side}>
+        <Rightbar />
+      </div>
     </div>
   );
 };
