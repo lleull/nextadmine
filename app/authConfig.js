@@ -1,9 +1,12 @@
+import { redirect } from "next/dist/server/api-utils";
+
 export const authConfig = {
   providers:[],
   pages: {
     signIn: "/login",
   },
   callbacks: {
+  
     authorized({ auth, request }) {
       const isLoggedIn = auth?.user;
       const isOnDashboard = request.nextUrl.pathname.startsWith("/dashboard");
@@ -12,6 +15,7 @@ export const authConfig = {
         return false;
       } else if (isLoggedIn) {
         return Response.redirect(new URL("/dashboard", request.nextUrl));
+          
       }
       return true;
     },

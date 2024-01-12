@@ -4,7 +4,10 @@ import { connectToDB } from "./utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/dist/server/api-utils";
 import { signIn, signOut } from "./../auth";
+import { NextApiResponse } from "next";
+
 import bcrypt from "bcrypt";
+
 import { redirects } from "@/next.config";
 export const addUser = async (formData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -165,9 +168,10 @@ export const logoutuser = async () => {
 export const authenticate = async (formData) => {
   const { username, password } = Object.fromEntries(formData);
   console.log(username, password);
-
+   
   try {
     await signIn("credentials", { username, password });
+    
   } catch (err) {
     return { error: "Wrong Credentials!" };
   }
