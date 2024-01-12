@@ -1,8 +1,8 @@
+
 import Menulink from "./menulink/Menulink";
 import styles from "./sidebar.module.css";
 
 import { signOut } from "@/app/auth";
-
 import Image from "next/image";
 import {
   MdDashboard,
@@ -15,12 +15,13 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
+  MdMenu,
 } from "react-icons/md";
 import { auth } from "@/app/auth";
 const Sidebar = async () => {
-  const  session  = await auth();
-  console.log(session.user.img)
- 
+  const session = await auth();
+  console.log(session.user.img);
+
   const menuItems = [
     {
       title: "Pages",
@@ -83,42 +84,50 @@ const Sidebar = async () => {
       ],
     },
   ];
+ 
+  
   return (
-    <div className={styles.container}>
-      <div className={styles.user}>
-        <Image
-          className={styles.userImage}
-          src={session.user.img || "/noavatar.png"}
-          alt="asd"
-          width={50}
-          height={50}
-        />
-        <div className={styles.userDetail}>
-          <span className={styles.username}>{session.user.username}</span>
-          <span className={styles.userTitle}>Administrator</span>
-        </div>
-      </div>
-      <ul className={styles.list}>
-        {menuItems.map((cat) => (
-          <li key={cat.title}>
-            <span className={styles.cat}>{cat.title}</span>
-            {cat.list.map((item) => (
-              <Menulink item={item} key={item.title} />
-            ))}
-          </li>
-        ))}
-      </ul>
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
+    <>
+ 
+
+      <div
+        className={ styles.container }
       >
-        <button type="submit" className={styles.logout}>
-          <MdLogout /> Logout
-        </button>
-      </form>
-    </div>
+        <div className={styles.user}>
+          <Image
+            className={styles.userImage}
+            src={session.user.img || "/noavatar.png"}
+            alt="asd"
+            width={50}
+            height={50}
+          />
+          <div className={styles.userDetail}>
+            <span className={styles.username}>{session.user.username}</span>
+            <span className={styles.userTitle}>Administrator</span>
+          </div>
+        </div>
+        <ul className={styles.list}>
+          {menuItems.map((cat) => (
+            <li key={cat.title}>
+              <span className={styles.cat}>{cat.title}</span>
+              {cat.list.map((item) => (
+                <Menulink item={item} key={item.title} />
+              ))}
+            </li>
+          ))}
+        </ul>
+        <form
+          action={async () => {
+            "use server";
+            await signOut();
+          }}
+        >
+          <button type="submit" className={styles.logout}>
+            <MdLogout /> Logout
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

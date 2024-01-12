@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { authConfig } from "./authConfig";
 import { connectToDB } from "./lib/utils";
 import { User } from "./lib/modals";
+import { redirect } from "next/dist/server/api-utils";
 
 const login = async (credentials) => {
   try {
@@ -32,11 +33,14 @@ export const { signIn, signOut, auth } = NextAuth({
   providers: [
     CredentialsProvider({
       id: 'credentials',
-      name: 'Credentials',
+   
       async authorize(credentials) {
         try {
           const user = await login(credentials);
           return user;
+          if(user){
+            redirect("/dashboard")
+          }
         } catch (error) {
           throw new Error("Failed to Login b/c of Credentials");
         }

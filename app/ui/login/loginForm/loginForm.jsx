@@ -14,9 +14,11 @@ const LoginForm = () => {
     <div className={styles.container}>
       <form action={authenticate} className={styles.form}>
         <h1 className={styles.title}>Login</h1>
-        <input value="bereket" type="text" name="username" required placeholder="username" />
-        <input value="12" type="password" name="password" placeholder="password" />
+        <input defaultValue="bereket" type="text" name="username" required placeholder="username" />
+        <input defaultValue="12" type="password" name="password" placeholder="password" />
+     
         <button type="submit">Login</button>
+     
         {/* <p className={styles.error}>{err && err}</p> */}
       </form>
     </div>
