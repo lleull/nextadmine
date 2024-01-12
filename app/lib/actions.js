@@ -3,18 +3,21 @@ import { Product, User } from "./modals";
 import { connectToDB } from "./utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/dist/server/api-utils";
+import { signIn, signOut } from "./../auth";
+import bcrypt from "bcrypt";
+import { redirects } from "@/next.config";
 export const addUser = async (formData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
     Object.fromEntries(formData);
-  // const salt = await bcrypt.genSalt(10);
-  // const hashedpassword = await new bcrypt.hash(password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const hashedpassword = await new bcrypt.hash(password, salt);
 
   try {
     connectToDB();
     const newUser = new User({
       username: username,
       email: email,
-      password: password,
+      password: hashedpassword,
       phone: phone,
       address: address,
       isAdmin: isAdmin,
@@ -94,7 +97,7 @@ export const updateUser = async (formData) => {
     Object.keys(updatefield).forEach(
       (key) => (updatefield[key] === "" || undefined) && delete updatefield[key]
     );
-    await User.findByIdAndUpdate( id, updatefield );
+    await User.findByIdAndUpdate(id, updatefield);
   } catch (error) {
     throw new Error(error);
   }
@@ -120,7 +123,7 @@ export const updateProduct = async (formData) => {
     Object.keys(updatefield).forEach(
       (key) => (updatefield[key] === "" || undefined) && delete updatefield[key]
     );
-   await Product.findByIdAndUpdate( id, updatefield );
+    await Product.findByIdAndUpdate(id, updatefield);
   } catch (error) {
     throw new Error("Error while updating a product");
   }
@@ -137,7 +140,7 @@ export const deleteProduct = async (formData) => {
   } catch (err) {
     throw new Error("Error while deleting this Product!");
   }
-  revalidatePath("/dashboard/products")
+  revalidatePath("/dashboard/products");
 };
 export const deleteUser = async (formData) => {
   const { id } = Object.fromEntries(formData);
@@ -148,5 +151,25 @@ export const deleteUser = async (formData) => {
   } catch (err) {
     throw new Error("Error while deleting this Product!");
   }
-  revalidatePath("/dashboard/users")
+  revalidatePath("/dashboard/users");
+};
+
+export const logoutuser = async () => {
+  try {
+    await signOut();
+  } catch (error) {
+    throw new Error("Error while Logging Out");
+  }
+};
+
+export const authenticate = async (formData) => {
+  const { username, password } = Object.fromEntries(formData);
+  console.log(username, password);
+
+  try {
+    await signIn("credentials", { username, password });
+   
+  } catch (err) {
+    return { error: "Wrong Credentials!" };
+  }
 };

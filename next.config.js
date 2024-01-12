@@ -4,8 +4,11 @@ const nextConfig = {
     remotePatterns: [{
       protocol: "https",
       hostname: "images.pexels.com",
+   
     }],
   },
+  
 };
 
+const punycode = require('punycode/');
 module.exports = nextConfig;

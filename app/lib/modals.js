@@ -56,6 +56,7 @@ const postSchema = new mongoose.Schema(
     },
     img: {
       type: String,
+      default: ""
     },
     color: {
       type: Boolean,
