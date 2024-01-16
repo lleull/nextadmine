@@ -32,15 +32,12 @@ export const { signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
     CredentialsProvider({
-      id: 'credentials',
-   
+      id: "credentials",
+
       async authorize(credentials) {
         try {
           const user = await login(credentials);
           return user;
-          if(user){
-            redirect("/dashboard")
-          }
         } catch (error) {
           throw new Error("Failed to Login b/c of Credentials");
         }
@@ -60,6 +57,7 @@ export const { signIn, signOut, auth } = NextAuth({
         session.user.username = token.username;
         session.user.img = token.img;
       }
+
       return session;
     },
   },
